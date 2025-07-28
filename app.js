@@ -12,6 +12,25 @@ app.use(logger("dev"));
 //Make the static files inside "public" folder publicly to the end-user
 app.use(express.static("public"));
 
+// JSON middleware to parse incoming HTTP requests that contain JSON
+app.use(express.json());
+
+//
+// Example of custom middleware
+//
+
+function sayHello(req, res, next) {
+  console.log("Hellooo~");
+  next();
+}
+function sayHello2(req, res, next) {
+  console.log("Hellooo 2!~");
+  next();
+}
+
+app.use("/", sayHello);
+app.use("/", sayHello2);
+
 // GET /
 app.get("/", (req, res, next) => {
   console.log("received request to the root path...");
