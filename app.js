@@ -1,9 +1,13 @@
 const pizzasArr = require("./data/pizzas.js");
 const express = require("express");
+const logger = require("morgan");
 
 const app = express();
 
 const PORT = 3000;
+
+//setup request logger to run on each request
+app.use(logger("dev"));
 
 //Make the static files inside "public" folder publicly to the end-user
 app.use(express.static("public"));
