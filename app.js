@@ -33,21 +33,16 @@ app.use("/", sayHello2);
 
 // GET /
 app.get("/", (req, res, next) => {
-  console.log("received request to the root path...");
-  // res.send();
   res.sendFile(__dirname + "/views/home.html");
 });
 
 // GET /contact
 app.get("/contact", (req, res, next) => {
-  console.log("received request to the contact page...");
-  // res.send();
   res.sendFile(__dirname + "/views/contact.html");
 });
 
 // GET /pizzas, send json response
 app.get("/pizzas", (req, res, next) => {
-  console.log("received request to the pizzas data");
   res.json(pizzasArr);
 });
 
