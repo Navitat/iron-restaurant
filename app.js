@@ -42,8 +42,20 @@ app.get("/contact", (req, res, next) => {
 });
 
 // GET /pizzas, send json response
+// GET /pizzas?maxPrice=x
 app.get("/pizzas", (req, res, next) => {
-  res.json(pizzasArr);
+  const { maxPrice } = req.query; //will give undefined if no req.params
+
+  if (maxPrice === undefined) {
+    res.json(pizzasArr);
+    return;
+  }
+
+  const filteredPizzas = pizzasArr.filter(
+    (pizza) => pizza.price <= parseFloat(maxPrice) //in this case it can be a decimal
+  );
+
+  res.json(filteredPizzas);
 });
 
 // GET /pizzas/:pizzaId json response
