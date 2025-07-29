@@ -46,6 +46,16 @@ app.get("/pizzas", (req, res, next) => {
   res.json(pizzasArr);
 });
 
+// GET /pizzas/:pizzaId json response
+app.get("/pizzas/:pizzaId", (req, res, next) => {
+  let { pizzaId } = req.params;
+  pizzaId = parseInt(pizzaId); //from req.params
+
+  const result = pizzasArr.find((pizza) => pizza.id === pizzaId);
+
+  res.json(result);
+});
+
 // Define and listen port
 app.listen(PORT, () => {
   console.log(`APP RUNNING on PORT: ${PORT}`);
