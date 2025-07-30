@@ -10,6 +10,10 @@ const pizzaSchema = new Schema({
     type: String,
     enum: ["thin", "thick", "with garlic", "with cheese"],
   },
+  cook: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Cook", // from the other collection
+  },
 });
 
 const Pizza = mongoose.model("Pizza", pizzaSchema);
