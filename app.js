@@ -2,7 +2,9 @@ const pizzasArr = require("./data/pizzas.js");
 const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
+
 const Pizza = require("./models/Pizza.model.js");
+const Cook = require("./models/Cook.model.js");
 
 const app = express();
 
@@ -136,6 +138,21 @@ app.delete("/pizzas/:pizzaId", (req, res, next) => {
       console.log("Error deleting pizza.");
       console.log(error);
       res.status(500).json({ error: "Failed to delete Pizza." });
+    });
+});
+
+// POST /cooks -- create new cook
+app.post("/cooks", (req, res, next) => {
+  const newCook = req.body;
+
+  Cook.create(newCook)
+    .then((cook) => {
+      res.status(201).json(cook);
+    })
+    .catch((error) => {
+      console.log("Error creating new cook.");
+      console.log(error);
+      res.status(500).json({ error: "Failed to create new cook" });
     });
 });
 
