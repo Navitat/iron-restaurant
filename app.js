@@ -1,6 +1,8 @@
 const pizzasArr = require("./data/pizzas.js");
 const express = require("express");
 const logger = require("morgan");
+const mongoose = require("mongoose");
+const Pizza = require("./models/Pizza.model.js");
 
 const app = express();
 
@@ -14,6 +16,16 @@ app.use(express.static("public"));
 
 // JSON middleware to parse incoming HTTP requests that contain JSON
 app.use(express.json());
+
+//
+// Connect to DB
+//
+mongoose
+  .connect("mongodb://127.0.0.1:27017/express-restaurant")
+  .then((x) =>
+    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+  )
+  .catch((err) => console.error("Error connecting to mongo", err));
 
 //
 // Example of custom middleware
@@ -31,6 +43,8 @@ function sayHello2(req, res, next) {
 app.use("/", sayHello);
 app.use("/", sayHello2);
 
+// ROUTES
+
 // GET /
 app.get("/", (req, res, next) => {
   res.sendFile(__dirname + "/views/home.html");
@@ -39,6 +53,21 @@ app.get("/", (req, res, next) => {
 // GET /contact
 app.get("/contact", (req, res, next) => {
   res.sendFile(__dirname + "/views/contact.html");
+});
+
+// POST /pizzas -- create a new pizza
+app.post("/pizzas", (req, res, next) => {
+  const newPizza = req.body;
+
+  Pizza.create(newPizza)
+    .then((pizzaFromDb) => {
+      res.status(201).json(pizzaFromDb); // 201: created
+    })
+    .catch((error) => {
+      console.log("Error creating new pizza in DB");
+      console.log(error);
+      res.status(500).json({ error: "Failed to create a new pizza" });
+    });
 });
 
 // GET /pizzas, send json response
