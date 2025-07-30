@@ -12,7 +12,7 @@ const pizzaSchema = new Schema({
   },
   cook: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Cook", // from the other collection
+    ref: "Cook", // the other collection
   },
 });
 

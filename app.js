@@ -83,6 +83,7 @@ app.get("/pizzas", (req, res, next) => {
   }
 
   Pizza.find(filter)
+    .populate("cook")
     .then((pizzas) => {
       console.log("Retrieved pizzas: ", pizzas);
       res.json(pizzas);
@@ -99,6 +100,7 @@ app.get("/pizzas/:pizzaId", (req, res, next) => {
   const { pizzaId } = req.params;
 
   Pizza.findById(pizzaId)
+    .populate("cook")
     .then((pizza) => {
       res.json(pizza);
     })
