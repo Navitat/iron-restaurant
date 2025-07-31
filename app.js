@@ -28,22 +28,6 @@ mongoose
   )
   .catch((err) => console.error("Error connecting to mongo", err));
 
-//
-// Example of custom middleware
-//
-
-function sayHello(req, res, next) {
-  console.log("Hellooo~");
-  next();
-}
-function sayHello2(req, res, next) {
-  console.log("Hellooo 2!~");
-  next();
-}
-
-app.use("/", sayHello);
-app.use("/", sayHello2);
-
 // ROUTES
 
 // GET /
